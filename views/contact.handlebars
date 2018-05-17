@@ -31,15 +31,22 @@
           </p>
           <p>
             <label>E-Mail</label>
-            <input type="email" name="email" placeholder="OPTIONAL: Needed for us to contact you if you win the lucky draw">
+            <input type="email" name="email" placeholder="name@email.com">
           </p>
           <p>
             <label>Type of Play</label>
-            <input type="text" name="ytchannel">
+            {{!-- <input type="text" name="ytchannel"> --}}
+            <select name="typeofplay">
+              <option value="skillshot">Skill Shot</option>
+              <option value="lucky">Lucky Moment</option>
+              <option value="wtf">WTF Moment</option>
+              <option value="other">Other</option>
+            </select>
+
           </p>
           <p>
             <label>Time Stamp</label>
-            <input type="text" name="timestamp" placeholder="When the play takes place (Ex. 8 min 40 sec)">
+            <input type="text" name="timestamp" placeholder="Ex. X min Y sec">
           </p>
           <p>
             <label>Replay File</label>

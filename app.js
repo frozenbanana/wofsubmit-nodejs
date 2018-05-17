@@ -6,6 +6,10 @@ const nodemailer = require('nodemailer');
 const fs = require("fs");
 const uploadedPath = path.join(__dirname, "/uploaded/");
 
+const EMAIL_NAME = process.env.MY_APP_EMAIL;
+const EMAIL_PASS = process.env.MY_APP_PASS;
+const EMAIL_RECEIVER = "oliverglandberger@gmail.com";
+
 const app = express();
 
 // view engine setup
@@ -34,7 +38,8 @@ app.post('/send', (req, res) => {
             <p>You have a new contact request</p> <h3>Contact Details</h3>
             <ul>
                 <li>Name: ${fields.name}</li>
-                <li>Youtube Channel: ${fields.ytchannel}</li>
+                <li>Type of Play: ${fields.typeofplay}</li>
+                <li>Time Stamp: ${fields.timestamp}</li>
                 <li>Email: ${fields.email}</li>
             </ul>
             <h3>Message</h3>
@@ -51,11 +56,11 @@ app.post('/send', (req, res) => {
 
             // setup email data with unicode symbols
             mailOptions = {
-                from: '"Nodemailer Contact" <henrytteesstt@gmail.com>', // sender address
-                to: 'oliverglandberger@gmail.com', // list of receivers
-                subject: 'Node Contact Request', // Subject line
-                text: 'Hello world?', // plain text body
-                html: output, // html body
+                from: '"WoF Submit Mailer"',                // sender address
+                to: EMAIL_RECEIVER,                         // list of receivers
+                subject: 'Node Contact Request',            // Subject line
+                text: 'Hello world?',                       // plain text body
+                html: output,                               // html body
                 attachments: [
                     {   // utf-8 string as an attachment
                         filename: fileName,
@@ -70,8 +75,8 @@ app.post('/send', (req, res) => {
                 port: 587,
                 secure: false,                       // true for 465, false for other ports
                 auth: {
-                    user: 'henrytteesstt@gmail.com', // generated ethereal user
-                    pass: 'qwert!234'                // generated ethereal password
+                    user: EMAIL_NAME,               // generated ethereal user
+                    pass: EMAIL_PASS                // generated ethereal password
                 },
                 tls:{
                     rejectUnauthorized:false
@@ -93,4 +98,4 @@ app.post('/send', (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('Server started..'));
+app.listen(5000, () => console.log('Server started..'));
