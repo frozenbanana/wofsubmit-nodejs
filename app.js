@@ -9,7 +9,7 @@ const uploadedPath = path.join(__dirname, "/uploaded/");
 
 const EMAIL_NAME = process.env.MY_APP_EMAIL;
 const EMAIL_PASS = process.env.MY_APP_PASS;
-const EMAIL_RECEIVER = "oliverglandberger@gmail.com";
+const EMAIL_RECEIVER = "wofsubmissions@gmail.com";
 const CAPTCHA_SECRET = process.env.MY_PASS_CAPTCHA_SECRET;
 const app = express();
 
@@ -30,6 +30,7 @@ var newFilePath = '';
 var mailOptions = {};
 
 app.post('/send', (req, res) => {
+    console.log(body);
     // if sending upload file to server
     var form = new formidable.IncomingForm({ uploadDir: uploadedPath });
     form.parse(req, function (err, fields, files) {
@@ -43,6 +44,9 @@ app.post('/send', (req, res) => {
 
         const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${CAPTCHA_SECRET}&response=${fields['g-recaptcha-response']}&remoteip=${req.connection.remoteAddress}`;
         
+        console.log(body);
+        console.log("Body has been printed");
+
         request(verifyUrl, (err, res, body) => {
             body = JSON.parse(body);
             console.log(body);
@@ -55,15 +59,15 @@ app.post('/send', (req, res) => {
                 form.parse(req, function (err, fields, files) {
                     console.log(fields);
                     output = `
-                <p>You have a new contact request</p> <h3>Contact Details</h3>
-                <ul>
-                 <li>Name: ${fields.name}</li>
-                    <li>Type of Play: ${fields.typeofplay}</li>
-                    <li>Time Stamp: ${fields.timestamp}</li>
-                    <li>Email: ${fields.email}</li>
-                </ul>
-                <h3>Message</h3>
-                <p>${fields.message}</p>
+                        <p>You have a new contact request</p> <h3>Contact Details</h3>
+                        <ul>
+                        <li>Name: ${fields.name}</li>
+                            <li>Type of Play: ${fields.typeofplay}</li>
+                            <li>Time Stamp: ${fields.timestamp}</li>
+                            <li>Email: ${fields.email}</li>
+                        </ul>
+                        <h3>Message</h3>
+                        <p>${fields.message}</p>
                 `
                     var oldFilePath = files.filetosend.path;
                     newFilePath = uploadedPath + files.filetosend.name;
